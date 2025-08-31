@@ -1,0 +1,10 @@
+
+.icon-form {
+  max-width: 120px;   /* íconos grandes */
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.icon-form:hover {
+  transform: scale(1.1);
+}
