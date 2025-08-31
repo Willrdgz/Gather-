@@ -1,0 +1,27 @@
+body{
+    background-color: black;
+}
+
+.user-info
+{
+    text-align: center;
+}
+
+
+
+
+#btnRegresar
+{
+    border: solid 1px white;
+    text-align: center;
+}
+
+.form-container
+{
+            background-color: #ffffff; /* Fondo blanco */
+            border-radius: 15px; /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2); /* Sombra sutil */
+            padding: 30px;
+            
+            margin: auto;
+}
