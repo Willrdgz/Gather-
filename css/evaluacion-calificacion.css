@@ -1,0 +1,928 @@
+/* Estilos con barras negras y nueva paleta de colores azules */
+
+:root {
+    --black-primary: #000000;
+    --black-secondary: #1a1a1a;
+    --black-accent: #2d2d2d;
+    --black-border: #404040;
+    --white-primary: #ffffff;
+    --white-secondary: #f8f9fa;
+    --text-dark: #212529;
+    --text-light: #6c757d;
+    --blue-accent: #007bff;
+    --blue-light: #4dabf7;
+    --success-color: #45c6e2;
+    --warning-color: #ffc107;
+    
+    /* NUEVA PALETA DE COLORES AZULES */
+    --bg-primary: #f0f8ff;
+    --bg-section: #ffffff;
+    --gradient-start: #e6f2ff;
+    --gradient-middle: #d4e7ff;
+    --gradient-end: #e6f2ff;
+    --section-border: #b3d9ff;
+    --section-shadow: 0 4px 15px rgba(179, 217, 255, 0.3);
+    
+    --clean-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --hover-shadow: 0 6px 20px rgba(179, 217, 255, 0.4);
+}
+
+/* Fondo general con nuevo color */
+.bg-light {
+    background-color: var(--bg-primary) !important;
+    min-height: 100vh;
+}
+
+/* HEADER NEGRO */
+header.bg-black {
+    background: var(--black-primary) !important;
+    border-bottom: 1px solid #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.user-info h5 {
+    color: var(--white-primary) !important;
+}
+
+.btn-outline-light {
+    border-color: var(--white-primary);
+    color: var(--white-primary);
+}
+
+.btn-outline-light:hover {
+    background-color: var(--white-primary);
+    color: var(--black-primary);
+}
+
+/* BARRA DE NAVEGACIÓN SUPERIOR - Fondo blanco con bordes negro y efectos en negro suave */
+.navbar {
+    background: var(--white-primary) !important;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--black-primary) !important;
+    box-shadow: var(--clean-shadow);
+}
+
+.navbar-nav {
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 12px 24px !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--black-secondary); /* Cambiado a negro suave */
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--black-primary) !important; /* Cambiado a negro */
+    background: rgba(0, 0, 0, 0.05); /* Fondo gris muy suave */
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+    width: 80%;
+}
+
+.nav-link.active {
+    background: rgba(0, 0, 0, 0.08); /* Active un poco más intenso */
+    color: var(--black-primary) !important;
+}
+
+/* BARRA LATERAL DE ÍCONOS - Negro más suave */
+.bg-dark {
+    background: var(--black-secondary) !important; /* Cambiado de black-primary a black-secondary */
+    border-radius: 16px;
+    padding: 2rem 1rem;
+    border: 1px solid var(--black-border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin-left: 1rem;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
+}
+
+.nav-item {
+    transition: all 0.3s ease;
+    padding: 12px 8px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.15); /* Hover más suave */
+    transform: translateX(3px);
+}
+
+.nav-item i {
+    transition: all 0.3s ease;
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.9); /* Íconos más visibles */
+    margin-bottom: 0.5rem;
+}
+
+.nav-item:hover i {
+    color: var(--blue-accent);
+    transform: scale(1.1);
+}
+
+.nav-item small {
+    color: rgba(255, 255, 255, 0.9); /* Texto más visible */
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-size: 0.8rem;
+    line-height: 1.2;
+}
+
+.nav-item:hover small {
+    color: var(--blue-accent);
+}
+
+/* Header del formulario - CON NUEVOS COLORES */
+.dark-header {
+    background: var(--bg-section) !important;
+    padding: 2.5rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid var(--section-border) !important;
+    margin-bottom: 2rem;
+    box-shadow: var(--section-shadow);
+}
+
+.dark-title {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.dark-description {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+/* Secciones blancas - CON NUEVOS COLORES */
+.dark-section {
+    background: var(--bg-section);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--section-shadow);
+    border: 1px solid var(--section-border);
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.dark-section:hover {
+    box-shadow: var(--hover-shadow);
+    transform: translateY(-2px);
+}
+
+.dark-section-title {
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--blue-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* PREGUNTAS CON NUEVO DIFUMINADO AZUL */
+.dark-question {
+    background: linear-gradient(135deg, 
+        var(--gradient-start) 0%, 
+        var(--gradient-middle) 50%, 
+        var(--gradient-end) 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(179, 217, 255, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 
+        0 2px 8px rgba(179, 217, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.dark-question:hover {
+    border-color: var(--blue-accent);
+    box-shadow: 
+        0 4px 20px rgba(179, 217, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: linear-gradient(135deg, 
+        rgba(230, 242, 255, 0.9) 0%, 
+        rgba(212, 231, 255, 0.95) 50%, 
+        rgba(230, 242, 255, 0.9) 100%);
+}
+
+.dark-question.dragging {
+    opacity: 0.8;
+    transform: rotate(2deg);
+    border: 2px dashed var(--blue-accent);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.2);
+}
+
+.question-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.move-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(179, 217, 255, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(179, 217, 255, 0.3);
+}
+
+.move-up, .move-down {
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.move-up:hover, .move-down:hover {
+    color: var(--blue-accent);
+    background: rgba(0, 123, 255, 0.15);
+    transform: scale(1.1);
+}
+
+.question-content {
+    flex: 1;
+}
+
+.dark-label {
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Inputs con nuevos bordes */
+.dark-input, .dark-textarea {
+    background: var(--white-primary);
+    border: 2px solid rgba(179, 217, 255, 0.5);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    color: var(--text-dark);
+    box-shadow: inset 0 1px 3px rgba(179, 217, 255, 0.2);
+}
+
+.dark-input::placeholder, .dark-textarea::placeholder {
+    color: var(--text-light);
+}
+
+.dark-input:focus, .dark-textarea:focus {
+    border-color: var(--blue-accent);
+    box-shadow: 
+        inset 0 1px 3px rgba(179, 217, 255, 0.3),
+        0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
+    background: var(--white-primary);
+}
+
+.dark-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Sistema de estrellas limpio */
+.dark-stars {
+    font-size: 2.5rem;
+    cursor: pointer;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.star {
+    color: #e0e0e0;
+    transition: all 0.3s ease;
+    margin: 0 8px;
+}
+
+.star:hover,
+.star.active {
+    color: var(--warning-color);
+    transform: scale(1.2);
+}
+
+.dark-labels {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+/* Botones de calificación con nuevos bordes */
+.rating-scale {
+    margin-top: 1rem;
+}
+
+.scale-labels {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.dark-rating-btn {
+    border: 2px solid rgba(179, 217, 255, 0.5);
+    color: var(--text-light);
+    font-weight: 600;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+    background: var(--white-primary);
+    box-shadow: inset 0 1px 2px rgba(179, 217, 255, 0.2);
+}
+
+.dark-rating-btn:hover {
+    border-color: var(--blue-accent);
+    color: var(--blue-accent);
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 0 1px 2px rgba(179, 217, 255, 0.3),
+        0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+.btn-check:checked + .dark-rating-btn {
+    background: var(--blue-accent);
+    border-color: var(--blue-accent);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+/* Radio buttons con nuevos bordes */
+.dark-radio-group {
+    display: flex;
+    gap: 2rem;
+}
+
+.dark-radio {
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    background: var(--white-primary);
+    border: 2px solid rgba(179, 217, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.dark-radio:checked {
+    background: var(--blue-accent);
+    border-color: var(--blue-accent);
+}
+
+.dark-radio-label {
+    color: var(--text-dark);
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.dark-radio-label:hover {
+    color: var(--blue-accent);
+}
+
+/* Controles de pregunta con nuevos fondos */
+.question-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.controls-left {
+    display: flex;
+    gap: 1rem;
+}
+
+.control-icon {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 6px;
+    background: rgba(179, 217, 255, 0.2);
+}
+
+.control-icon:hover {
+    color: var(--blue-accent);
+    background: rgba(0, 123, 255, 0.15);
+    transform: scale(1.1);
+}
+
+.bi-trash:hover {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.controls-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.obligatory-text {
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* Switch con nuevos colores */
+.dark-switch {
+    width: 3rem;
+    height: 1.5rem;
+    background: rgba(179, 217, 255, 0.5);
+    border: 1px solid rgba(179, 217, 255, 0.7);
+}
+
+.dark-switch:checked {
+    background: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.dark-switch:focus {
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}
+
+/* Botón de enviar limpio */
+.dark-submit-btn {
+    background: var(--blue-accent);
+    border: none;
+    border-radius: 10px;
+    padding: 15px 40px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.dark-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+    background: var(--blue-light);
+}
+
+/* Animaciones limpias */
+.dark-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.dark-question {
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+    }
+    
+    .nav-link {
+        padding: 10px 16px !important;
+        font-size: 1rem;
+    }
+    
+    .bg-dark {
+        margin-left: 0;
+        margin-top: 2rem;
+        padding: 1.5rem;
+    }
+    
+    .nav {
+        flex-direction: row !important;
+        justify-content: space-around;
+    }
+    
+    .nav-item {
+        margin-bottom: 0;
+        margin-right: 1rem;
+    }
+    
+    .dark-header {
+        padding: 2rem 1.5rem;
+    }
+    
+    .dark-title {
+        font-size: 2rem;
+    }
+    
+    .dark-section {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .dark-stars {
+        font-size: 2rem;
+    }
+    
+    .question-header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .move-controls {
+        flex-direction: row;
+        align-self: flex-start;
+    }
+    
+    .question-controls {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .controls-right {
+        align-self: center;
+    }
+    
+    .dark-submit-btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+/* Estilos para iconos de edición de títulos y encabezados */
+.dark-title, .dark-description, .section-title {
+    position: relative;
+    display: inline-block;
+}
+
+.control-icon.ms-2 {
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.control-icon.ms-2:hover {
+    opacity: 1;
+    color: #10b981 !important;
+    transform: scale(1.1);
+}
+/* ========== ESTILOS PARA BLOQUES DE TEXTO INFORMATIVO - CON NUEVOS COLORES ========== */
+.dark-text-block {
+    background: var(--bg-section) !important;
+    padding: 2.5rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid var(--section-border) !important;
+    margin-bottom: 2rem;
+    box-shadow: var(--section-shadow);
+}
+
+.text-block-content {
+    font-family: inherit;
+    line-height: 1.6;
+    color: var(--text-dark);
+    text-align: center;
+    width: 100%;
+}
+
+.text-block-content h1,
+.text-block-content h2,
+.text-block-content h3 {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.text-block-content p {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.text-block-content br {
+    display: block;
+    content: "";
+    margin-bottom: 1rem;
+}
+
+.text-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.move-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(179, 217, 255, 0.2);
+    border-radius: 8px;
+    border: 1px solid rgba(179, 217, 255, 0.3);
+}
+
+.move-text-up, .move-text-down {
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.move-text-up:hover, .move-text-down:hover {
+    color: var(--blue-accent);
+    background: rgba(0, 123, 255, 0.15);
+    transform: scale(1.1);
+}
+
+.text-controls {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos específicos para el formato de título y descripción */
+.text-title {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.text-description {
+    color: var(--text-light);
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* ========== ESTILOS PARA EL EDITOR DE TEXTO ENRIQUECIDO ========== */
+.editor-toolbar {
+    background: var(--white-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.editor-toolbar .btn-group {
+    margin-right: 0.5rem;
+}
+
+.editor-toolbar .btn {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--white-primary);
+    color: var(--text-dark);
+    transition: all 0.2s ease;
+}
+
+.editor-toolbar .btn:hover {
+    background: var(--blue-accent);
+    color: white;
+    border-color: var(--blue-accent);
+    transform: translateY(-1px);
+}
+
+.editor-toolbar .form-select {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--white-primary);
+    color: var(--text-dark);
+}
+
+.editor-toolbar .form-control-color {
+    width: 40px;
+    height: 38px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.editor-container {
+    background: var(--white-primary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#editorTexto, #editorTextoEdicion {
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 12px;
+    background: var(--white-primary);
+    border: none;
+    outline: none;
+    line-height: 1.6;
+    font-family: inherit;
+}
+
+#editorTexto:focus, #editorTextoEdicion:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+/* Estilos para el contenido editable */
+#editorTexto[contenteditable="true"]:empty:before,
+#editorTextoEdicion[contenteditable="true"]:empty:before {
+    content: "Escriba su texto aquí...";
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Vista previa */
+.vista-previa-container {
+    background: var(--white-primary);
+}
+
+#vistaPreviaTexto, #vistaPreviaTextoEdicion {
+    background: var(--white-primary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    min-height: 80px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 12px;
+    line-height: 1.6;
+}
+
+/* Estilos para contenido formateado */
+.formatted-content {
+    text-align: left;
+    width: 100%;
+}
+
+.formatted-content b, 
+.formatted-content strong {
+    font-weight: bold;
+}
+
+.formatted-content i, 
+.formatted-content em {
+    font-style: italic;
+}
+
+.formatted-content u {
+    text-decoration: underline;
+}
+
+.formatted-content ul, 
+.formatted-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.formatted-content li {
+    margin-bottom: 0.5rem;
+}
+
+.formatted-content p {
+    margin-bottom: 1rem;
+}
+
+.formatted-content h1, 
+.formatted-content h2, 
+.formatted-content h3, 
+.formatted-content h4, 
+.formatted-content h5, 
+.formatted-content h6 {
+    margin: 1.5rem 0 1rem 0;
+    font-weight: bold;
+}
+
+.formatted-content h1 { font-size: 2.5rem; }
+.formatted-content h2 { font-size: 2rem; }
+.formatted-content h3 { font-size: 1.75rem; }
+.formatted-content h4 { font-size: 1.5rem; }
+.formatted-content h5 { font-size: 1.25rem; }
+.formatted-content h6 { font-size: 1rem; }
+
+/* Alineaciones */
+.formatted-content[style*="text-align: left"] {
+    text-align: left;
+}
+
+.formatted-content[style*="text-align: center"] {
+    text-align: center;
+}
+
+.formatted-content[style*="text-align: right"] {
+    text-align: right;
+}
+
+/* Tamaños de fuente */
+.formatted-content font[size="1"] { font-size: 0.8rem; }
+.formatted-content font[size="3"] { font-size: 1rem; }
+.formatted-content font[size="5"] { font-size: 1.5rem; }
+.formatted-content font[size="7"] { font-size: 2rem; }
+
+/* Responsive para el editor */
+@media (max-width: 768px) {
+    .editor-toolbar {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .editor-toolbar .btn-group {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+    
+    #editorTexto, #editorTextoEdicion {
+        min-height: 150px;
+        max-height: 300px;
+    }
+    
+    #vistaPreviaTexto, #vistaPreviaTextoEdicion {
+        min-height: 60px;
+        max-height: 120px;
+    }
+}
+/* ========== ESTILOS PARA ESTRELLAS SELECCIONADAS - CORREGIDO ========== */
+.star.selected {
+    color: #f59e0b !important;
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    transform: scale(1.2);
+}
+
+.star.hover {
+    color: #fbbf24 !important;
+    transform: scale(1.1);
+}
+
+/* Mantener los estilos existentes pero asegurar funcionamiento */
+.star {
+    color: #e0e0e0;
+    transition: all 0.3s ease;
+    margin: 0 8px;
+    cursor: pointer;
+}
+
+.star:hover {
+    color: #fbbf24;
+    transform: scale(1.1);
+}

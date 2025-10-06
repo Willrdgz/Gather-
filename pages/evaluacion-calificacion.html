@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación y Calificación</title>
+    <link rel="icon" type="image/png" href="../img/logo.1.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/evaluacion-calificacion.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-light text-dark">
+
+<!-- Modal para Editar Pregunta -->
+<div class="modal fade" id="editarPreguntaModal" tabindex="-1" aria-labelledby="editarPreguntaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarPreguntaModalLabel">Editar Pregunta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarPregunta">
+                    <div class="mb-3">
+                        <label for="preguntaTexto" class="form-label">Texto de la pregunta:</label>
+                        <input type="text" class="form-control" id="preguntaTexto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de pregunta:</label>
+                        <select class="form-select" id="preguntaTipo">
+                            <option value="texto">Texto abierto</option>
+                            <option value="email">Email</option>
+                            <option value="estrellas">Calificación con estrellas</option>
+                            <option value="escala">Escala numérica (1-5)</option>
+                            <option value="opciones">Opciones múltiples</option>
+                        </select>
+                    </div>
+                    <div id="opcionesContainer" class="mb-3" style="display: none;">
+                        <label class="form-label">Opciones:</label>
+                        <div id="opcionesLista">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control opcion-input" placeholder="Opción 1">
+                                <button type="button" class="btn btn-outline-danger" onclick="eliminarOpcion(this)">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="agregarOpcion()">+ Agregar opción</button>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="preguntaObligatoria">
+                        <label class="form-check-label" for="preguntaObligatoria">
+                            Pregunta obligatoria
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="guardarCambiosPregunta()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Nueva Pregunta -->
+<div class="modal fade" id="nuevaPreguntaModal" tabindex="-1" aria-labelledby="nuevaPreguntaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nuevaPreguntaModalLabel">Añadir Nueva Pregunta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNuevaPregunta">
+                    <div class="mb-3">
+                        <label for="nuevaPreguntaTexto" class="form-label">Texto de la pregunta:</label>
+                        <input type="text" class="form-control" id="nuevaPreguntaTexto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de pregunta:</label>
+                        <select class="form-select" id="nuevaPreguntaTipo">
+                            <option value="texto">Texto abierto</option>
+                            <option value="email">Email</option>
+                            <option value="estrellas">Calificación con estrellas</option>
+                            <option value="escala">Escala numérica (1-5)</option>
+                            <option value="opciones">Opciones múltiples</option>
+                        </select>
+                    </div>
+                    <div id="nuevasOpcionesContainer" class="mb-3" style="display: none;">
+                        <label class="form-label">Opciones:</label>
+                        <div id="nuevasOpcionesLista">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control nueva-opcion-input" placeholder="Opción 1">
+                                <button type="button" class="btn btn-outline-danger" onclick="eliminarNuevaOpcion(this)">×</button>
+                            </div>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control nueva-opcion-input" placeholder="Opción 2">
+                                <button type="button" class="btn btn-outline-danger" onclick="eliminarNuevaOpcion(this)">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="agregarNuevaOpcion()">+ Agregar opción</button>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sección:</label>
+                        <select class="form-select" id="nuevaPreguntaSeccion">
+                            <option value="section-evaluado">Información del Evaluado</option>
+                            <option value="section-calificacion">Calificación General</option>
+                            <option value="section-criterios">Criterios de Evaluación</option>
+                            <option value="section-retroalimentacion">Retroalimentación</option>
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="nuevaPreguntaObligatoria">
+                        <label class="form-check-label" for="nuevaPreguntaObligatoria">
+                            Pregunta obligatoria
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearNuevaPregunta()">Crear Pregunta</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header class="bg-black">
+    <div class="container-fluid py-2">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <img src="../img/logo sin fondo.png" class="img-fluid" width="200">
+            </div>
+            <div class="col-md-8 d-flex justify-content-end align-items-center">
+                <div class="px-2">
+                    <img src="../img/userIcon1.png" width="50px" height="auto">
+                </div>
+                <div class="user-info text-light py-2">
+                    <h5 id="userName">Nombre de usuario</h5>
+                    <button type="button" class="btn btn-outline-light btn-sm" id="btnRegresar" onclick="location.href='menu.html'">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container-fluid mt-3">
+    <div class="container">
+        <!-- NAVBAR -->
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="collapse navbar-collapse justify-content-center">
+                        <ul class="navbar-nav">
+                            <li class="nav-item px-2">
+                                <a class="nav-link active tab-link" data-tab="preguntas" href="#">Preguntas</a>
+                            </li>
+                            <li class="nav-item px-2">
+                                <a class="nav-link tab-link" data-tab="respuestas" href="#">Respuestas</a>
+                            </li>
+                            <li class="nav-item px-2">
+                                <a class="nav-link tab-link" data-tab="configuracion" href="#">Configuración</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- SECCIÓN PREGUNTAS -->
+        <div id="tab-preguntas" class="tab-section">
+            <div id="secciones-container">
+                <!-- Aquí va todo el contenido de tu formulario y preguntas -->
+            </div>
+        </div>
+        <!-- SECCIÓN RESPUESTAS -->
+        <div id="tab-respuestas" class="tab-section" style="display: none;">
+            <h5 class="text-center mt-4 text-muted">
+                📊 Aún no hay respuestas disponibles.
+            </h5>
+        </div>
+        <!-- SECCIÓN CONFIGURACIÓN -->
+        <div id="tab-configuracion" class="tab-section" style="display: none;">
+            <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+                <div class="config-card p-4 rounded shadow-sm text-center" style="background: #fff; width: 400px;">
+                    <h5 class="mb-4">
+                        ⚙️ <strong>Configuración del formulario</strong>
+                    </h5>
+                    <!-- Color de fondo general -->
+                    <div class="mb-3 text-start">
+                        <label for="colorFondo" class="form-label fw-semibold">Color de fondo:</label>
+                        <input type="color" id="colorFondo" class="form-control form-control-color" value="#f8f9fa">
+                    </div>
+                    <!-- Color de las preguntas -->
+                    <div class="mb-3 text-start">
+                        <label for="colorPreguntas" class="form-label fw-semibold">Color de las preguntas:</label>
+                        <input type="color" id="colorPreguntas" class="form-control form-control-color" value="#ffffff">
+                    </div>
+                    <button id="btnAplicarColores" class="btn btn-primary w-100 mt-3">
+                        Aplicar cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMULARIO PRINCIPAL -->
+        <div class="row justify-content-center mt-4">
+            <!-- Formulario -->
+            <div class="col-md-9">
+                <form id="encuestaForm">
+                    <div class="form-header dark-header mb-4">
+                        <h1 class="dark-title">Evaluación y Calificación</h1>
+                        <p class="dark-description">Complete la siguiente evaluación para calificar el desempeño y proporcionar retroalimentación constructiva.</p>
+                    </div>
+
+                    <!-- Contenedor principal de secciones (para el movimiento) -->
+                    <div id="secciones-container">
+                        <!-- Información del evaluado -->
+                        <div class="dark-section movable-section" id="section-evaluado" data-section-id="1">
+                            <div class="section-header d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="section-title dark-section-title mb-0">Información del Evaluado</h4>
+                                <div class="section-controls">
+                                    <i class="bi bi-arrow-up move-section-up control-icon me-2" title="Mover sección arriba"></i>
+                                    <i class="bi bi-arrow-down move-section-down control-icon" title="Mover sección abajo"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Pregunta 1: Nombre del evaluado -->
+                            <div class="dark-question" data-question-id="1">
+                                <label class="form-label dark-label">Nombre completo del evaluado *</label>
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control dark-input" placeholder="Nombre completo *">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls"> 
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Obligatorio</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 2: Puesto o cargo -->
+                            <div class="dark-question" data-question-id="2">
+                                <label class="form-label dark-label">Puesto o cargo del evaluado *</label>
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control dark-input" placeholder="Puesto o cargo *">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls">
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Obligatorio</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calificación general -->
+                        <div class="dark-section movable-section" id="section-calificacion" data-section-id="2">
+                            <div class="section-header d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="section-title dark-section-title mb-0">Calificación General</h4>
+                                <div class="section-controls">
+                                    <i class="bi bi-arrow-up move-section-up control-icon me-2" title="Mover sección arriba"></i>
+                                    <i class="bi bi-arrow-down move-section-down control-icon" title="Mover sección abajo"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Pregunta 3: Calificación con estrellas -->
+                            <div class="dark-question" data-question-id="3">
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-md-12">
+                                                <label class="form-label dark-label">Calificación general del desempeño *</label>
+                                                <div class="star-rating dark-stars">
+                                                    <span class="star" data-rating="1">★</span>
+                                                    <span class="star" data-rating="2">★</span>
+                                                    <span class="star" data-rating="3">★</span>
+                                                    <span class="star" data-rating="4">★</span>
+                                                    <span class="star" data-rating="5">★</span>
+                                                </div>
+                                                <div class="rating-labels dark-labels">
+                                                    <small>Desempeño insuficiente</small>
+                                                    <small>Desempeño excepcional</small>
+                                                </div>
+                                                <input type="hidden" id="calificacionGeneral" name="calificacionGeneral">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls">
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Obligatorio</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Criterios de evaluación -->
+                        <div class="dark-section movable-section" id="section-criterios" data-section-id="3">
+                            <div class="section-header d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="section-title dark-section-title mb-0">Criterios de Evaluación</h4>
+                                <div class="section-controls">
+                                    <i class="bi bi-arrow-up move-section-up control-icon me-2" title="Mover sección arriba"></i>
+                                    <i class="bi bi-arrow-down move-section-down control-icon" title="Mover sección abajo"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Pregunta 4: Calidad del trabajo -->
+                            <div class="dark-question" data-question-id="4">
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-md-12">
+                                                <label class="form-label dark-label">Calidad del trabajo *</label>
+                                                <div class="rating-scale">
+                                                    <div class="scale-labels">
+                                                        <span>Deficiente</span>
+                                                        <span>Excelente</span>
+                                                    </div>
+                                                    <div class="btn-group w-100" role="group">
+                                                        <input type="radio" class="btn-check" name="calidadTrabajo" id="calidad1" value="1" required>
+                                                        <label class="btn dark-rating-btn" for="calidad1">1</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="calidadTrabajo" id="calidad2" value="2">
+                                                        <label class="btn dark-rating-btn" for="calidad2">2</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="calidadTrabajo" id="calidad3" value="3">
+                                                        <label class="btn dark-rating-btn" for="calidad3">3</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="calidadTrabajo" id="calidad4" value="4">
+                                                        <label class="btn dark-rating-btn" for="calidad4">4</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="calidadTrabajo" id="calidad5" value="5">
+                                                        <label class="btn dark-rating-btn" for="calidad5">5</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls">
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Obligatorio</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 5: Trabajo en equipo -->
+                            <div class="dark-question" data-question-id="5">
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-md-12">
+                                                <label class="form-label dark-label">Trabajo en equipo *</label>
+                                                <div class="rating-scale">
+                                                    <div class="scale-labels">
+                                                        <span>Deficiente</span>
+                                                        <span>Excelente</span>
+                                                    </div>
+                                                    <div class="btn-group w-100" role="group">
+                                                        <input type="radio" class="btn-check" name="trabajoEquipo" id="equipo1" value="1" required>
+                                                        <label class="btn dark-rating-btn" for="equipo1">1</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="trabajoEquipo" id="equipo2" value="2">
+                                                        <label class="btn dark-rating-btn" for="equipo2">2</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="trabajoEquipo" id="equipo3" value="3">
+                                                        <label class="btn dark-rating-btn" for="equipo3">3</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="trabajoEquipo" id="equipo4" value="4">
+                                                        <label class="btn dark-rating-btn" for="equipo4">4</label>
+                                                        
+                                                        <input type="radio" class="btn-check" name="trabajoEquipo" id="equipo5" value="5">
+                                                        <label class="btn dark-rating-btn" for="equipo5">5</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls">
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Obligatorio</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Retroalimentación -->
+                        <div class="dark-section movable-section" id="section-retroalimentacion" data-section-id="4">
+                            <div class="section-header d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="section-title dark-section-title mb-0">Retroalimentación</h4>
+                                <div class="section-controls">
+                                    <i class="bi bi-arrow-up move-section-up control-icon me-2" title="Mover sección arriba"></i>
+                                    <i class="bi bi-arrow-down move-section-down control-icon" title="Mover sección abajo"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Pregunta 6: Fortalezas -->
+                            <div class="dark-question" data-question-id="6">
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-12">
+                                                <label class="form-label dark-label">Principales fortalezas observadas</label>
+                                                <textarea class="form-control dark-textarea" rows="3" placeholder="Describa las principales fortalezas del evaluado..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls">
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Opcional</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 7: Áreas de mejora -->
+                            <div class="dark-question" data-question-id="7">
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-12">
+                                                <label class="form-label dark-label">Áreas de oportunidad para mejorar</label>
+                                                <textarea class="form-control dark-textarea" rows="3" placeholder="Describa las áreas donde el evaluado puede mejorar..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls">
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Opcional</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pregunta 8: Recomendación -->
+                            <div class="dark-question" data-question-id="8">
+                                <div class="question-header">
+                                    <div class="move-controls">
+                                        <i class="bi bi-arrow-up move-up" title="Mover pregunta arriba"></i>
+                                        <i class="bi bi-arrow-down move-down" title="Mover pregunta abajo"></i>
+                                    </div>
+                                    <div class="question-content">
+                                        <div class="row g-2">
+                                            <div class="col-12">
+                                                <label class="form-label dark-label">¿Recomienda la continuidad en el puesto?</label>
+                                                <div class="dark-radio-group">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input dark-radio" type="radio" name="recomendacion" id="recomendacionSi" value="si">
+                                                        <label class="form-check-label dark-radio-label" for="recomendacionSi">Sí, definitivamente</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input dark-radio" type="radio" name="recomendacion" id="recomendacionCondicional" value="condicional">
+                                                        <label class="form-check-label dark-radio-label" for="recomendacionCondicional">Sí, con condiciones</label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input dark-radio" type="radio" name="recomendacion" id="recomendacionNo" value="no">
+                                                        <label class="form-check-label dark-radio-label" for="recomendacionNo">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="question-controls">
+                                    <div class="controls-left">
+                                        <i class="bi bi-pencil control-icon" title="Editar pregunta"></i>
+                                        <i class="bi bi-copy control-icon" title="Duplicar pregunta"></i>
+                                        <i class="bi bi-trash control-icon" title="Eliminar pregunta"></i>
+                                    </div>
+                                    <div class="controls-right">
+                                        <span class="obligatory-text">Opcional</span>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input dark-switch" type="checkbox" role="switch">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón de enviar -->
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn dark-submit-btn btn-lg">
+                            <i class="bi bi-send-check me-2"></i> Enviar Evaluación
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Barra lateral de íconos -->
+            <div class="col-md-1 d-flex justify-content-center bg-dark rounded py-3 text-light">
+                <nav>
+                    <ul class="nav flex-column">
+                        <li class="nav-item d-flex flex-column align-items-center text-center mb-3">
+                            <i class="bi bi-plus-circle fs-5" style="cursor: pointer;"></i>
+                            <small>Añadir pregunta</small>
+                        </li>
+
+                        <li class="nav-item d-flex flex-column align-items-center text-center">
+                        <label class="btn nav-link text-light d-flex flex-column align-items-center" for="importPreguntasInput">
+                        <i class="bi bi-file-earmark-plus fs-5"></i>
+                        <small>Importar pregunta</small>
+                        </label>
+                        <input type="file" id="importPreguntasInput" accept=".json" style="display: none;">
+                        </li>
+
+                        <li class="nav-item d-flex flex-column align-items-center text-center mb-3">
+                            <i class="bi bi-fonts fs-5" style="cursor: pointer;"></i>
+                            <small>Añadir texto</small>
+                        </li>
+                        <li class="nav-item d-flex flex-column align-items-center text-center mb-3">
+                            <i class="bi bi-card-image fs-5"></i>
+                            <small>Añadir imagen</small>
+                        </li>
+                        <li class="nav-item d-flex flex-column align-items-center text-center">
+                            <i class="bi bi-play-btn fs-5"></i>
+                            <small>Añadir video</small>
+                        </li>
+                        <li class="nav-item d-flex flex-column align-items-center text-center mt-3">
+                            <button id="btnExportar" class="btn nav-link text-light d-flex flex-column align-items-center" style="background: none; border: none;">
+                                <i class="bi bi-download fs-5"></i>
+                                <small>Exportar</small>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/Formumario.js"></script>
+<script src="../js/mostrarUsuario.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+body {
+  background-color: #ffffff;
+}
+
+.card {
+  border: none;
+}
+
+.btn-primary {
+  background-color: #9ae1da;
+  border: none;
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #7cd0c8;
+}
+
+.btn-outline-primary {
+  border: 2px solid #9ae1da;
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-outline-primary:hover {
+  background-color: #9ae1da;
+  color: #000;
+}
